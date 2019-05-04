@@ -1,10 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<workspace name="helloworld" folder="behaviors" export="exported" language="cs" version="3">
+<workspace name="helloworld" folder="behaviors" export="..\UnityBehaviac\Assets\Resources\behaviac\exported" language="cs" version="3">
   <export>
     <cs>
-      <isexported>False</isexported>
+      <isexported>True</isexported>
       <exportfilecount>1</exportfilecount>
-      <folder>../exported</folder>
+      <folder>../../UnityBehaviac/Assets/Scripts/behaviac</folder>
     </cs>
+    <xml>
+      <isexported>True</isexported>
+    </xml>
   </export>
 </workspace>

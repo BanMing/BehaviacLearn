@@ -12,24 +12,18 @@ using System.Collections.Generic;
 
 ///<<< END WRITING YOUR CODE
 
-public class FirstAgent : behaviac.Agent
-///<<< BEGIN WRITING YOUR CODE FirstAgent
+public class SecondAgent : behaviac.Agent
+///<<< BEGIN WRITING YOUR CODE SecondAgent
 ///<<< END WRITING YOUR CODE
 {
-	private int p1 = 0;
-	public void _set_p1(int value)
+	private int p2 = 0;
+	public void _set_p2(int value)
 	{
-		p1 = value;
+		p2 = value;
 	}
-	public int _get_p1()
+	public int _get_p2()
 	{
-		return p1;
-	}
-
-	public void SayHello()
-	{
-///<<< BEGIN WRITING YOUR CODE SayHello
-///<<< END WRITING YOUR CODE
+		return p2;
 	}
 
 ///<<< BEGIN WRITING YOUR CODE CLASS_PART

@@ -203,8 +203,9 @@ namespace behaviac
 			meta.RegisterMethod(502968959, new CMethod_behaviac_Agent_VectorRemove());
 
 			// FirstAgent
-			meta = new AgentMeta(136495355);
+			meta = new AgentMeta(3598781007);
 			AgentMeta._AgentMetas_[1778122110] = meta;
+			meta.RegisterMemberProperty(2082220067, new CMemberProperty<int>("p1", delegate(Agent self, int value) { ((FirstAgent)self)._set_p1(value); }, delegate(Agent self) { return ((FirstAgent)self)._get_p1(); }));
 			meta.RegisterMethod(1045109914, new CAgentStaticMethodVoid<string>(delegate(string param0) { FirstAgent.LogMessage(param0); }));
 			meta.RegisterMethod(1505908390, new CAgentMethodVoid(delegate(Agent self) { ((FirstAgent)self).SayHello(); }));
 			meta.RegisterMethod(2521019022, new CMethod_behaviac_Agent_VectorAdd());
