@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--EXPORTED BY TOOL, DON'T MODIFY IT!-->
+<!--Source File: ParallelBT.xml-->
+<behavior name="ParallelBT" agenttype="FirstAgent" version="5">
+  <node class="Sequence" id="0">
+    <node class="Assignment" id="1">
+      <property CastRight="false" />
+      <property Opl="int Self.FirstAgent::p1" />
+      <property Opr="const int 2" />
+    </node>
+    <node class="Sequence" id="2">
+      <node class="Parallel" id="3">
+        <property ChildFinishPolicy="CHILDFINISH_LOOP" />
+        <property ExitPolicy="EXIT_ABORT_RUNNINGSIBLINGS" />
+        <property FailurePolicy="FAIL_ON_ONE" />
+        <property SuccessPolicy="SUCCEED_ON_ALL" />
+        <node class="Condition" id="4">
+          <property Operator="Equal" />
+          <property Opl="int Self.FirstAgent::p1" />
+          <property Opr="const int 2" />
+        </node>
+        <node class="Action" id="5">
+          <property Method="Self.FirstAgent::Says(&quot;In Parallel 1&quot;,false)" />
+          <property ResultOption="BT_INVALID" />
+        </node>
+        <node class="Action" id="6">
+          <property Method="Self.FirstAgent::Says(&quot;In Parallel 2&quot;,true)" />
+          <property ResultOption="BT_INVALID" />
+        </node>
+      </node>
+    </node>
+  </node>
+</behavior>

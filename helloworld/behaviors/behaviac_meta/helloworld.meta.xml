@@ -1,6 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <meta>
-  <types />
+  <types>
+    <enumtype Type="FirstEnum" Namespace="" IsCustomized="true" DisplayName="FirstEnum" Desc="">
+      <enum NativeValue="e1" Value="e1" DisplayName="e1" Desc="" MemberValue="-1" />
+      <enum NativeValue="e2" Value="e2" DisplayName="e2" Desc="" MemberValue="-1" />
+      <enum NativeValue="e3" Value="e3" DisplayName="e3" Desc="" MemberValue="-1" />
+    </enumtype>
+    <struct Type="FirstStruct" Namespace="" Base="" IsCustomized="true" DisplayName="FirstStruct" Desc="">
+      <Member Name="s1" DisplayName="s1" Desc="s1" Type="int" TypeFullName="System.Int32" Class="FirstStruct" Public="true" />
+      <Member Name="s2" DisplayName="s2" Desc="s2" Type="float" TypeFullName="System.Single" Class="FirstStruct" Public="true" />
+    </struct>
+  </types>
   <agents>
     <agent classfullname="behaviac::Agent" DisplayName="behaviac::Agent" Desc="behaviac::Agent" IsRefType="true" IsImplemented="true">
       <Method Name="VectorLength" DisplayName="VectorLength" Desc="VectorLength" Class="behaviac::Agent" ReturnType="int" ReturnTypeFullName="System.Int32" Static="true" Public="true" istask="false">
@@ -28,6 +38,8 @@
     <agent classfullname="FirstAgent" base="behaviac::Agent" DisplayName="FirstAgent" Desc="FirstAgent" IsRefType="true" IsCustomized="true">
       <Member Name="p1" DisplayName="p1" Desc="p1" Class="FirstAgent" Type="int" TypeFullName="System.Int32" defaultvalue="0" Static="false" Public="false" Readonly="false" />
       <Member Name="pInstance" DisplayName="pInstance" Desc="pInstance" Class="FirstAgent" Type="System::Object*" TypeFullName="XMLPluginBehaviac.System_Object" defaultvalue="null" Static="false" Public="false" Readonly="false" />
+      <Member Name="p2" DisplayName="p2" Desc="p2" Class="FirstAgent" Type="FirstStruct*" TypeFullName="XMLPluginBehaviac.FirstStruct" defaultvalue="{s1=0;s2=0;}" Static="false" Public="false" Readonly="false" />
+      <Member Name="p3" DisplayName="p3" Desc="p3" Class="FirstAgent" Type="FirstEnum" TypeFullName="XMLPluginBehaviac.FirstEnum" defaultvalue="e1" Static="false" Public="false" Readonly="false" />
       <Method Name="SayHello" DisplayName="SayHello" Desc="SayHello" Class="FirstAgent" ReturnType="void" ReturnTypeFullName="System.Void" Static="false" Public="true" istask="false" />
       <Method Name="Say" DisplayName="Say" Desc="Say" Class="FirstAgent" ReturnType="void" ReturnTypeFullName="System.Void" Static="false" Public="true" istask="false">
         <Param Name="param0" Type="string&amp;" TypeFullName="System.String" IsRef="true" DisplayName="param0" Desc="param0" />
@@ -40,6 +52,10 @@
       </Method>
       <Method Name="Wait" DisplayName="Wait" Desc="Wait" Class="FirstAgent" ReturnType="behaviac::EBTStatus" ReturnTypeFullName="XMLPluginBehaviac.behaviac_EBTStatus" Static="false" Public="true" istask="false" />
       <Method Name="Start" DisplayName="Start" Desc="Start" Class="FirstAgent" ReturnType="behaviac::EBTStatus" ReturnTypeFullName="XMLPluginBehaviac.behaviac_EBTStatus" Static="false" Public="true" istask="false" />
+      <Method Name="Says" DisplayName="Says" Desc="Says" Class="FirstAgent" ReturnType="behaviac::EBTStatus" ReturnTypeFullName="XMLPluginBehaviac.behaviac_EBTStatus" Static="false" Public="true" istask="false">
+        <Param Name="value" Type="string" TypeFullName="System.String" DisplayName="value" Desc="value" />
+        <Param Name="isLatent" Type="bool" TypeFullName="System.Boolean" DisplayName="isLatent" Desc="isLatent" />
+      </Method>
     </agent>
     <agent classfullname="SecondAgent" base="behaviac::Agent" DisplayName="SecondAgent" Desc="SecondAgent" IsRefType="true" IsCustomized="true">
       <Member Name="p2" DisplayName="p2" Desc="p2" Class="SecondAgent" Type="int" TypeFullName="System.Int32" defaultvalue="0" Static="false" Public="false" Readonly="false" />

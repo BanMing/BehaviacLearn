@@ -8,9 +8,73 @@ using System.Collections.Generic;
 
 namespace behaviac
 {
+	public class CompareValue_FirstEnum : ICompareValue<FirstEnum>
+	{
+		public override bool Equal(FirstEnum lhs, FirstEnum rhs)
+		{
+			return lhs == rhs;
+		}
+		public override bool NotEqual(FirstEnum lhs, FirstEnum rhs)
+		{
+			return lhs != rhs;
+		}
+		public override bool Greater(FirstEnum lhs, FirstEnum rhs)
+		{
+			return lhs > rhs;
+		}
+		public override bool GreaterEqual(FirstEnum lhs, FirstEnum rhs)
+		{
+			return lhs >= rhs;
+		}
+		public override bool Less(FirstEnum lhs, FirstEnum rhs)
+		{
+			return lhs < rhs;
+		}
+		public override bool LessEqual(FirstEnum lhs, FirstEnum rhs)
+		{
+			return lhs <= rhs;
+		}
+	}
+
+	public class CompareValue_FirstStruct : ICompareValue<FirstStruct>
+	{
+		public override bool Equal(FirstStruct lhs, FirstStruct rhs)
+		{
+			return (lhs.s1 == rhs.s1) && (lhs.s2 == rhs.s2);
+		}
+		public override bool NotEqual(FirstStruct lhs, FirstStruct rhs)
+		{
+			return !Equal(lhs, rhs);
+		}
+	}
+
 
 	public class BehaviorLoaderImplement : BehaviorLoader
 	{
+		class CInstanceConst_FirstStruct : CInstanceConst<FirstStruct>
+		{
+			IInstanceMember _s1;
+			IInstanceMember _s2;
+
+			public CInstanceConst_FirstStruct(string typeName, string valueStr) : base(typeName, valueStr)
+			{
+				List<string> paramStrs = behaviac.StringUtils.SplitTokensForStruct(valueStr);
+				Debug.Check(paramStrs != null && paramStrs.Count == 2);
+
+				_s1 = (CInstanceMember<int>)AgentMeta.ParseProperty<int>(paramStrs[0]);
+				_s2 = (CInstanceMember<float>)AgentMeta.ParseProperty<float>(paramStrs[1]);
+			}
+
+			public override void Run(Agent self)
+			{
+				Debug.Check(_s1 != null);
+				Debug.Check(_s2 != null);
+
+				_value.s1 = ((CInstanceMember<int>)_s1).GetValue(self);
+				_value.s2 = ((CInstanceMember<float>)_s2).GetValue(self);
+			}
+		};
+
 		private class CMethod_behaviac_Agent_VectorAdd : CAgentMethodVoidBase
 		{
 			IInstanceMember _param0;
@@ -225,7 +289,7 @@ namespace behaviac
 
 		public override bool Load()
 		{
-			AgentMeta.TotalSignature = 1802300320;
+			AgentMeta.TotalSignature = 1896202473;
 
 			AgentMeta meta;
 
@@ -240,14 +304,17 @@ namespace behaviac
 			meta.RegisterMethod(502968959, new CMethod_behaviac_Agent_VectorRemove());
 
 			// FirstAgent
-			meta = new AgentMeta(3036433147);
+			meta = new AgentMeta(3588288675);
 			AgentMeta._AgentMetas_[1778122110] = meta;
 			meta.RegisterMemberProperty(2082220067, new CMemberProperty<int>("p1", delegate(Agent self, int value) { ((FirstAgent)self)._set_p1(value); }, delegate(Agent self) { return ((FirstAgent)self)._get_p1(); }));
+			meta.RegisterMemberProperty(1462860768, new CMemberProperty<FirstStruct>("p2", delegate(Agent self, FirstStruct value) { ((FirstAgent)self)._set_p2(value); }, delegate(Agent self) { return ((FirstAgent)self)._get_p2(); }));
+			meta.RegisterMemberProperty(1311394465, new CMemberProperty<FirstEnum>("p3", delegate(Agent self, FirstEnum value) { ((FirstAgent)self)._set_p3(value); }, delegate(Agent self) { return ((FirstAgent)self)._get_p3(); }));
 			meta.RegisterMemberProperty(1144200279, new CMemberProperty<System.Object>("pInstance", delegate(Agent self, System.Object value) { ((FirstAgent)self)._set_pInstance(value); }, delegate(Agent self) { return ((FirstAgent)self)._get_pInstance(); }));
 			meta.RegisterMethod(3345343196, new CAgentMethodVoid<int>(delegate(Agent self, int param0) { }) /* event_task */);
 			meta.RegisterMethod(1045109914, new CAgentStaticMethodVoid<string>(delegate(string param0) { FirstAgent.LogMessage(param0); }));
 			meta.RegisterMethod(702722749, new CMethod_FirstAgent_Say());
 			meta.RegisterMethod(1505908390, new CAgentMethodVoid(delegate(Agent self) { ((FirstAgent)self).SayHello(); }));
+			meta.RegisterMethod(2645266540, new CAgentMethod<behaviac.EBTStatus, string, bool>(delegate(Agent self, string value, bool isLatent) { return ((FirstAgent)self).Says(value, isLatent); }));
 			meta.RegisterMethod(664995375, new CAgentMethod<behaviac.EBTStatus>(delegate(Agent self) { return ((FirstAgent)self).Start(); }));
 			meta.RegisterMethod(2065006847, new CAgentMethodVoid<int>(delegate(Agent self, int param0) { }) /* t1 */);
 			meta.RegisterMethod(2521019022, new CMethod_behaviac_Agent_VectorAdd());
@@ -271,6 +338,10 @@ namespace behaviac
 			AgentMeta.Register<behaviac.Agent>("behaviac.Agent");
 			AgentMeta.Register<FirstAgent>("FirstAgent");
 			AgentMeta.Register<SecondAgent>("SecondAgent");
+			AgentMeta.Register<FirstEnum>("FirstEnum");
+			ComparerRegister.RegisterType<FirstEnum, CompareValue_FirstEnum>();
+			AgentMeta.Register<FirstStruct>("FirstStruct");
+			ComparerRegister.RegisterType<FirstStruct, CompareValue_FirstStruct>();
 
 			Agent.RegisterInstanceName<SecondAgent>("SecondAgentInstance");
 			return true;
@@ -281,6 +352,8 @@ namespace behaviac
 			AgentMeta.UnRegister<behaviac.Agent>("behaviac.Agent");
 			AgentMeta.UnRegister<FirstAgent>("FirstAgent");
 			AgentMeta.UnRegister<SecondAgent>("SecondAgent");
+			AgentMeta.UnRegister<FirstEnum>("FirstEnum");
+			AgentMeta.UnRegister<FirstStruct>("FirstStruct");
 
 			Agent.UnRegisterInstanceName<SecondAgent>("SecondAgentInstance");
 			return true;
