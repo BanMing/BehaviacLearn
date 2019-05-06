@@ -26,14 +26,21 @@ public class FirstAgent : behaviac.Agent
 		return p1;
 	}
 
-	private SecondAgent pInstance = null;
-	public void _set_pInstance(SecondAgent value)
+	private System.Object pInstance = null;
+	public void _set_pInstance(System.Object value)
 	{
 		pInstance = value;
 	}
-	public SecondAgent _get_pInstance()
+	public System.Object _get_pInstance()
 	{
 		return pInstance;
+	}
+
+	public void Say(ref string param0)
+	{
+///<<< BEGIN WRITING YOUR CODE Say
+        behaviac.Debug.LogWarning("Say: " + param0);
+        ///<<< END WRITING YOUR CODE
 	}
 
 	public void SayHello()
@@ -44,7 +51,29 @@ public class FirstAgent : behaviac.Agent
         ///<<< END WRITING YOUR CODE
 	}
 
+	public behaviac.EBTStatus Start()
+	{
+///<<< BEGIN WRITING YOUR CODE Start
+        count = 0;
+        return behaviac.EBTStatus.BT_RUNNING;
+        ///<<< END WRITING YOUR CODE
+	}
+
+	public behaviac.EBTStatus Wait()
+	{
+///<<< BEGIN WRITING YOUR CODE Wait
+        count++;
+        behaviac.Debug.LogWarning("p1 = " + p1);
+        if (count == 10000)
+        {
+            return behaviac.EBTStatus.BT_SUCCESS;
+        }
+        return behaviac.EBTStatus.BT_RUNNING;
+        ///<<< END WRITING YOUR CODE
+	}
+
 ///<<< BEGIN WRITING YOUR CODE CLASS_PART
+    int count;
     private static string FilePath
     {
         get
@@ -71,19 +100,19 @@ public class FirstAgent : behaviac.Agent
 
         behaviac.Workspace.Instance.FilePath = FirstAgent.FilePath;
         behaviac.Workspace.Instance.FileFormat = behaviac.Workspace.EFileFormat.EFF_xml;
-
+        behaviac.Config.IsSocketBlocking = true;
         return true;
     }
 
     // 加载指定的行为树，这里的行为树名字为“FirstBT”
-    private bool InitPlayer()
+    private bool InitPlayer(string btName)
     {
         behaviac.Debug.LogWarning("InitPlayer");
 
-        bool bRet = this.btload("Firstbt");
+        bool bRet = this.btload(btName);
         if (bRet)
         {
-            this.btsetcurrent("Firstbt");
+            this.btsetcurrent(btName);
         }
 
         return bRet;
@@ -116,14 +145,26 @@ public class FirstAgent : behaviac.Agent
 
         return bRet;
     }
-    // void Awake()
-    // {
-    //     InitBehavic();
+    // 加载指定的行为树，这里的行为树名字为“ParentBT”
+    private bool InitParentPlayer()
+    {
+        behaviac.Debug.LogWarning("InitPlayer");
 
-    //     // InitPlayer();
+        bool bRet = this.btload("ParentBT");
+        if (bRet)
+        {
+            this.btsetcurrent("ParentBT");
+        }
 
-    //     InitSelectPlayer();
-    // }
+        return bRet;
+    }
+
+    void Awake()
+    {
+        InitBehavic();
+
+        InitPlayer("dome");
+    }
 
     behaviac.EBTStatus _status = behaviac.EBTStatus.BT_RUNNING;
 
@@ -134,6 +175,8 @@ public class FirstAgent : behaviac.Agent
             behaviac.Debug.LogWarning("Update");
 
             _status = this.btexec();
+            // FireEvent("event_task", 2);
+            behaviac.Workspace.Instance.DebugUpdate();
         }
     }
     ///<<< END WRITING YOUR CODE

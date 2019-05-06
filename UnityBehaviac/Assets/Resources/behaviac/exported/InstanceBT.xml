@@ -10,13 +10,13 @@
     </node>
     <node class="Assignment" id="2">
       <property CastRight="false" />
-      <property Opl="int pInstance.SecondAgent::p2" />
+      <property Opl="int Self.FirstAgent::p1" />
       <property Opr="const int 5" />
     </node>
     <node class="Condition" id="3">
       <property Operator="Greater" />
       <property Opl="int SecondAgentInstance.SecondAgent::p2" />
-      <property Opr="int pInstance.SecondAgent::p2" />
+      <property Opr="const int 0" />
     </node>
     <node class="Action" id="4">
       <property Method="Self.FirstAgent::SayHello()" />

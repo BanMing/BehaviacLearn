@@ -185,10 +185,47 @@ namespace behaviac
 			}
 		}
 
+		private class CMethod_FirstAgent_Say : CAgentMethodVoidBase
+		{
+			CInstanceMember<string> _param0;
+
+			public CMethod_FirstAgent_Say()
+			{
+			}
+
+			public CMethod_FirstAgent_Say(CMethod_FirstAgent_Say rhs) : base(rhs)
+			{
+			}
+
+			public override IMethod Clone()
+			{
+				return new CMethod_FirstAgent_Say(this);
+			}
+
+			public override void Load(string instance, string[] paramStrs)
+			{
+				Debug.Check(paramStrs.Length == 1);
+
+				_instance = instance;
+				_param0 = (CInstanceMember<string>)AgentMeta.ParseProperty<string>(paramStrs[0]);
+			}
+
+			public override void Run(Agent self)
+			{
+				Debug.Check(_param0 != null);
+
+				string param0 = ((CInstanceMember<string>)_param0).GetValue(self);
+				Agent agent = Utils.GetParentAgent(self, _instance);
+
+				((FirstAgent)agent).Say(ref param0);
+				_param0.SetValue(self, param0);
+			}
+		}
+
 
 		public override bool Load()
 		{
-			AgentMeta.TotalSignature = 2144556769;
+			AgentMeta.TotalSignature = 1802300320;
 
 			AgentMeta meta;
 
@@ -203,17 +240,22 @@ namespace behaviac
 			meta.RegisterMethod(502968959, new CMethod_behaviac_Agent_VectorRemove());
 
 			// FirstAgent
-			meta = new AgentMeta(1086210822);
+			meta = new AgentMeta(3036433147);
 			AgentMeta._AgentMetas_[1778122110] = meta;
 			meta.RegisterMemberProperty(2082220067, new CMemberProperty<int>("p1", delegate(Agent self, int value) { ((FirstAgent)self)._set_p1(value); }, delegate(Agent self) { return ((FirstAgent)self)._get_p1(); }));
-			meta.RegisterMemberProperty(1144200279, new CMemberProperty<SecondAgent>("pInstance", delegate(Agent self, SecondAgent value) { ((FirstAgent)self)._set_pInstance(value); }, delegate(Agent self) { return ((FirstAgent)self)._get_pInstance(); }));
+			meta.RegisterMemberProperty(1144200279, new CMemberProperty<System.Object>("pInstance", delegate(Agent self, System.Object value) { ((FirstAgent)self)._set_pInstance(value); }, delegate(Agent self) { return ((FirstAgent)self)._get_pInstance(); }));
+			meta.RegisterMethod(3345343196, new CAgentMethodVoid<int>(delegate(Agent self, int param0) { }) /* event_task */);
 			meta.RegisterMethod(1045109914, new CAgentStaticMethodVoid<string>(delegate(string param0) { FirstAgent.LogMessage(param0); }));
+			meta.RegisterMethod(702722749, new CMethod_FirstAgent_Say());
 			meta.RegisterMethod(1505908390, new CAgentMethodVoid(delegate(Agent self) { ((FirstAgent)self).SayHello(); }));
+			meta.RegisterMethod(664995375, new CAgentMethod<behaviac.EBTStatus>(delegate(Agent self) { return ((FirstAgent)self).Start(); }));
+			meta.RegisterMethod(2065006847, new CAgentMethodVoid<int>(delegate(Agent self, int param0) { }) /* t1 */);
 			meta.RegisterMethod(2521019022, new CMethod_behaviac_Agent_VectorAdd());
 			meta.RegisterMethod(2306090221, new CMethod_behaviac_Agent_VectorClear());
 			meta.RegisterMethod(3483755530, new CMethod_behaviac_Agent_VectorContains());
 			meta.RegisterMethod(505785840, new CMethod_behaviac_Agent_VectorLength());
 			meta.RegisterMethod(502968959, new CMethod_behaviac_Agent_VectorRemove());
+			meta.RegisterMethod(994837275, new CAgentMethod<behaviac.EBTStatus>(delegate(Agent self) { return ((FirstAgent)self).Wait(); }));
 
 			// SecondAgent
 			meta = new AgentMeta(2420330950);
